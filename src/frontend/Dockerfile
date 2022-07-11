@@ -29,7 +29,28 @@ RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /go/bin/frontend .
 FROM alpine as release
 RUN apk add --no-cache ca-certificates \
     busybox-extras net-tools bind-tools
-WORKDIR /src
+
+
+ENV USER=appuser
+ENV UID=1000
+ENV GID=2000
+ENV APP_WORKDIR=/src
+RUN addgroup --gid $GID $USER\
+    && adduser \
+        --disabled-password \
+        --gecos "" \
+        --home "$(pwd)" \
+        --ingroup "$USER" \
+        --no-create-home \
+        --uid "$UID" \
+        "$USER" \
+    && mkdir -p ${APP_WORKDIR}
+WORKDIR $APP_WORKDIR
+RUN chown -R $USER:$USER ${APP_WORKDIR}
+
+USER appuser
+
+
 COPY --from=builder /go/bin/frontend /src/server
 COPY ./templates ./templates
 COPY ./static ./static

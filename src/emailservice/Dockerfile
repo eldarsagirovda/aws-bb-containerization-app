@@ -40,7 +40,26 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
     chmod +x /bin/grpc_health_probe
 
-WORKDIR /email_server
+
+
+ENV USER=appuser
+ENV UID=1000
+ENV GID=2000
+ENV APP_WORKDIR=/email_server
+RUN addgroup --gid $GID $USER\
+    && adduser \
+        --disabled-password \
+        --gecos "" \
+        --home "$(pwd)" \
+        --ingroup "$USER" \
+        --no-create-home \
+        --uid "$UID" \
+        "$USER" \
+    && mkdir -p ${APP_WORKDIR}
+WORKDIR $APP_WORKDIR
+RUN chown -R $USER:$USER ${APP_WORKDIR}
+
+USER appuser
 
 # Grab packages from builder
 COPY --from=builder /usr/local/lib/python3.7/ /usr/local/lib/python3.7/

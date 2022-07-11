@@ -24,8 +24,27 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
     chmod +x /bin/grpc_health_probe
 
+
+ENV USER=appuser
+ENV UID=1000
+ENV GID=2000
+ENV APP_WORKDIR=/recommendationservice
+RUN addgroup --gid $GID $USER\
+    && adduser \
+        --disabled-password \
+        --gecos "" \
+        --home "$(pwd)" \
+        --ingroup "$USER" \
+        --no-create-home \
+        --uid "$UID" \
+        "$USER" \
+    && mkdir -p ${APP_WORKDIR}
+WORKDIR $APP_WORKDIR
+RUN chown -R $USER:$USER ${APP_WORKDIR}
+
+USER appuser
+
 # get packages
-WORKDIR /recommendationservice
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
