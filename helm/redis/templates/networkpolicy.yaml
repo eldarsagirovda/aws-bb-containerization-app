@@ -13,10 +13,7 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          app.kubernetes.io/name: frontend
-    - podSelector:
-        matchLabels:
-          app.kubernetes.io/name: checkoutservice
+          app.kubernetes.io/name: cartservice
     ports:
     - protocol: TCP
       {{- with (first .Values.ports) }}

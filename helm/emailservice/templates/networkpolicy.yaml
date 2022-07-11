@@ -13,9 +13,6 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          app.kubernetes.io/name: frontend
-    - podSelector:
-        matchLabels:
           app.kubernetes.io/name: checkoutservice
     ports:
     - protocol: TCP

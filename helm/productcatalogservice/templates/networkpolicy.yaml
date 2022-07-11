@@ -17,6 +17,9 @@ spec:
     - podSelector:
         matchLabels:
           app.kubernetes.io/name: checkoutservice
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: recommendationservice
     ports:
     - protocol: TCP
       {{- with (first .Values.ports) }}

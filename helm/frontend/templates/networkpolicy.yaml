@@ -11,12 +11,7 @@ spec:
   - Ingress
   ingress:
   - from:
-    - podSelector:
-        matchLabels:
-          app.kubernetes.io/name: frontend
-    - podSelector:
-        matchLabels:
-          app.kubernetes.io/name: checkoutservice
+    - podSelector: {}
     ports:
     - protocol: TCP
       {{- with (first .Values.ports) }}
