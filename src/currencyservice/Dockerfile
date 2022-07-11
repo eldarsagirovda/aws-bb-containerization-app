@@ -37,8 +37,8 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
 
 
 ENV USER=appuser
-ENV UID=1000
-ENV GID=2000
+ENV UID=1001
+ENV GID=2001
 ENV APP_WORKDIR=/usr/src/app
 RUN addgroup --gid $GID $USER\
     && adduser \

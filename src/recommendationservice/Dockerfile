@@ -42,7 +42,6 @@ RUN addgroup --gid $GID $USER\
 WORKDIR $APP_WORKDIR
 RUN chown -R $USER:$USER ${APP_WORKDIR}
 
-USER appuser
 
 # get packages
 COPY requirements.txt requirements.txt
@@ -50,6 +49,7 @@ RUN pip install -r requirements.txt
 
 # add files into working directory
 COPY . .
+USER appuser
 
 # set listen port
 ENV PORT "8080"
