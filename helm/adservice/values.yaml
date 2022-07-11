@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: 589295909756.dkr.ecr.eu-west-1.amazonaws.com/esagirov-aws-bb/adservice
@@ -93,7 +93,7 @@ resources:
     memory: 300Mi
 
 autoscaling:
-  enabled: false
+  enabled: true
   minReplicas: 1
   maxReplicas: 30
   targetCPUUtilizationPercentage: 80
