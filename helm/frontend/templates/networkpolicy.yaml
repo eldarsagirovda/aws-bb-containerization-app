@@ -10,9 +10,7 @@ spec:
   policyTypes:
   - Ingress
   ingress:
-  - from:
-    - podSelector: {}
-    ports:
+  - ports:
     - protocol: TCP
       {{- with (first .Values.ports) }}
       port: {{ .containerPort }}
